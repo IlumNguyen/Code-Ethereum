@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MultiTransactionHandler {
+    address public owner;
+
+    event TransactionProcessed(address indexed sender, string message);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the owner can call this function");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function processTransactions(address[] memory recipients, string[] memory messages, bytes32[] memory signatures) external {
+        require(recipients.length == messages.length && recipients.length == signatures.length, "Arrays length mismatch");
+
+        for (uint256 i = 0; i < recipients.length; i++) {
+            require(recipients[i] != address(0), "Invalid recipient address");
+            require(bytes(messages[i]).length > 0, "Message must not be empty");
+
+            // Verify the signature
+            bytes32 messageHash = keccak256(abi.encodePacked(recipients[i], messages[i]));
+            require(ecrecover(messageHash, 0, 0, 0) == owner, "Invalid signature");
+
+            // Perform the transaction
+            // For the purpose of this example, let's just emit the message as an event
+            emit TransactionProcessed(recipients[i], messages[i]);
+        }
+    }
+
+    // Other functions and logic can be added as needed
+}
