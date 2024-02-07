@@ -61,3 +61,6 @@ contract SimpleToken {
         return true;
     }
 }
+
+
+//tôi đã chỉnh sửa lại một chút cho hoàn thiện
