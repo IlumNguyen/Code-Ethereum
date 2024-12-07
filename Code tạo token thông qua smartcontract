@@ -1,5 +1,5 @@
 //code chạy qua remix.ethereum.org
-tttr
+
  // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -63,4 +63,4 @@ contract SimpleToken {
 }
 
 
-//lastest update on date 06.03.2024
+//lastest update on date 06.03.2024 gfgd
